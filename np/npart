@@ -1,6 +1,6 @@
 #!/usr/bin/conky -d -c
 ##	.conkyrc configuration
-alignment middle_left
+alignment bottom_left
 background no
 border_margin 0
 border_inner_margin 0
@@ -12,8 +12,8 @@ draw_borders no
 draw_graph_borders no
 draw_outline no
 draw_shades no
-gap_x 750
-gap_y 80
+gap_x 100
+gap_y 235
 max_specials 1024
 max_user_text 10000
 minimum_size 0 0
