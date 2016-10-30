@@ -2,9 +2,14 @@
 
 base="$HOME/.conky/now-clocking"
 
+art="$base/art"
+if [ ! -d $art ]; then
+	mkdir $art
+fi
+
 url=`dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:'org.mpris.MediaPlayer2.Player' string:'Metadata'|egrep -A 1 "artUrl"|egrep -v "artUrl"|cut -b 44-|cut -d '"' -f 1|egrep -v ^$`
 
-curFile="$base/art/cur.txt"
+curFile="$art/cur.txt"
 if [ ! -f $curFile ]; then
 	touch $curFile
 fi
@@ -12,13 +17,13 @@ fi
 id=`echo $url | grep -oP '[^/]+$'`
 cur=`cat $curFile`
 
-if [ "$cur" != "!id" ]; then
-	if [ ! -f $base/art/$id ]; then
+if [ "$cur" != "$id" ]; then
+	if [ ! -f "$art/$id" ]; then
 		# Download
-		wget $url -O $base/art/$id
+		wget $url -O $art/$id
 	fi
 	# Move
-	cp $base/art/$id $base/art/npart.jpg
+	cp $art/$id $art/npart.jpg
 	# Override cur
 	echo $id > $curFile
 fi
