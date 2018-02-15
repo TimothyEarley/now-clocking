@@ -7,18 +7,19 @@ if [ ! -d $art ]; then
 	mkdir $art
 fi
 
-url=`dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:'org.mpris.MediaPlayer2.Player' string:'Metadata'|egrep -A 1 "artUrl"|egrep -v "artUrl"|cut -b 44-|cut -d '"' -f 1|egrep -v ^$`
+#url=`dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:'org.mpris.MediaPlayer2.Player' string:'Metadata'|egrep -A 1 "artUrl"|egrep -v "artUrl"|cut -b 44-|cut -d '"' -f 1|egrep -v ^$`
+url=$(playerctl metadata mpris:artUrl)
 
 curFile="$art/cur.txt"
 if [ ! -f $curFile ]; then
 	touch $curFile
 fi
 
-id=`echo $url | grep -oP '[^/]+$'`
+id=`echo $url | grep -oP '[^/]+$'` # grab the last part of the url
 cur=`cat $curFile`
 
-if [ "$cur" != "$id" ]; then
-	if [ ! -f "$art/$id" ]; then
+if [ "$cur" != "$id" ]; then #new track
+	if [ ! -f "$art/$id" ]; then #new image
 		# Download
 		wget $url -O $art/$id
 	fi
@@ -27,4 +28,3 @@ if [ "$cur" != "$id" ]; then
 	# Override cur
 	echo $id > $curFile
 fi
-

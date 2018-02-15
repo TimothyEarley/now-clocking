@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# 36
+
+<&0 fold -w 19 -s | \
+sed \
+  -e 's/\$/$$/' \
+  -e 's/^/${goto 150}/' \
+  -e 's/#/\\#/'
+
+# esacape $ with $$
+# escape # with \#
+# add an offset/goto to each newline
