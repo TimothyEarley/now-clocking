@@ -45,8 +45,8 @@ TEXT
 ${if_running spotify}
 ${exec sh ~/.conky/now-clocking/spotifyart} \
 ${image ~/.conky/now-clocking/art/npart.jpg -p 0,0 -s 125x125 -n} \
-${font Gotham Bold:pixelsize=40}${execp playerctl metadata artist | ../formatBig}
-${font Gotham Book:pixelsize=23}${execp playerctl metadata title | ../format} \
+${font Gotham Bold:pixelsize=40}${execp playerctl metadata title | ../formatBig}
+${font Gotham Book:pixelsize=23}${execp playerctl metadata artist | ../format} \
 ${endif}
 
 
